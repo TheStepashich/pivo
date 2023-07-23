@@ -1,0 +1,15 @@
+{
+    "conf": [
+        {
+            "key": "+",
+            "ptt": "z",
+            "INDEX": 10,
+            "path": "",
+            "user": "",
+            "tab_num": "",
+            "bus_model": "",
+            "bus_num": "",
+            "gov_num": ""
+        }
+    ]
+}
