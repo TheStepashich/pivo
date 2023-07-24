@@ -15,6 +15,8 @@ import glob
 import customtkinter
 from PIL import Image as I
 from customtkinter import filedialog
+import requests
+import wget
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -121,7 +123,7 @@ class no_reg(customtkinter.CTk):
         self.div_btns = customtkinter.CTkFrame(master=self)
         self.div_btns.pack(pady=0, padx=60, fill="both", expand=True)
 
-        self.label_1 = customtkinter.CTkLabel(width=100, height=20, text= "Выберите ваше имя пользователя\nЕсли его нет - Напишите в поддержкуa ", master=self.div_label, justify=customtkinter.LEFT)
+        self.label_1 = customtkinter.CTkLabel(width=100, height=20, text= "Выберите ваше имя пользователя\nЕсли его нет - Напишите в поддержку. ", master=self.div_label, justify=customtkinter.LEFT)
         self.label_1.pack(pady=20, padx=20, expand = True, anchor ='n')
 
         # self.optionmenu_1 = customtkinter.CTkOptionMenu(self.div_btns, values=["Option 1", "Option 2", "Option 42 long long long..."])
@@ -473,7 +475,40 @@ class already_reg(customtkinter.CTk):
         else:
             self.settings_win.focus()  # if window exists focus it
 
+class App(customtkinter.CTk):
+    def __init__(self):
+        super().__init__()
+        self.geometry(f"{200}x{100}")
+        self.resizable(width=False, height=False)
+        self.title("ПИВО | Обновления")
+        self.show_warning()
+    def show_warning(self):
+        self.label = customtkinter.CTkLabel(master=self, text='Программа обновляется.')
+        self.label.pack()
+
+def download_upd():
+    app = App()
+    install_file = 'PIVO_INSTALL.exe'
+    if os.path.isfile(install_file):
+        os.remove(install_file)
+        wget.download(url='https://github.com/TheStepashich/pivo/releases/download/kareta/PIVO_INSTALL.exe', out='PIVO_INSTALL.exe')
+    else: 
+        wget.download(url='https://github.com/TheStepashich/pivo/releases/download/kareta/PIVO_INSTALL.exe', out='PIVO_INSTALL.exe')
+    os.startfile('PIVO_INSTALL.exe')
+    os.abort()
+
 def main():
+    try:
+        response = requests.get(url='https://raw.githubusercontent.com/TheStepashich/pivo/main/ver.txt')
+        if response.text.removesuffix('\n') == 'v1.1.2':
+            print(response.text)
+        else:
+            print('Программа устарела', response.text)
+            download_upd()
+    except Exception as _ex:
+        print('err')
+
+
     user = read('conf.json')['conf'][0]['user']
     if user == '' or user == ' ':
         app = no_reg()
