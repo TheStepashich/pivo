@@ -24,9 +24,8 @@ def send_data(route, line, date):
 
 def txt_inf():
     line = f.readline()
-    if line == '':
-        os.abort()
-    
+    if line == '/do Конечная.' or line == '':
+        f.seek(0)
     k.send('t')
     t.sleep(0.1)
     k.write(line)

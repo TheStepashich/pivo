@@ -17,12 +17,6 @@ def close():
         os.startfile('monitoring.exe')
         os.abort()
 
-def write(data, file):
-    data = json.dumps(data)
-    data = json.loads(str(data))
-    with open('conf.json', 'w') as f:
-        json.dump(data, f, indent=4)
-
 def read(file):
     with open(file, 'r', encoding='utf-8') as f:
         return json.load(f)
@@ -80,7 +74,7 @@ def play():
     global i
     i+=1
     if i == len(vlist): 
-        os.abort()
+        i = 0
     
     send_data(route, vlist[i], now.strftime("%d-%m-%Y %H:%M:%S"))
     with wave.open(vlist[i], 'rb') as wf:

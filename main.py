@@ -17,6 +17,7 @@ from PIL import Image as I
 from customtkinter import filedialog
 import requests
 import wget
+import webbrowser
 
 customtkinter.set_appearance_mode("Dark")  # Modes: "System" (standard), "Dark", "Light"
 customtkinter.set_default_color_theme("blue")  # Themes: "blue" (standard), "green", "dark-blue"
@@ -33,6 +34,7 @@ for u in range(p.get_device_count()):
     # print(u, p.get_device_info_by_index(u))
     if 'CABLE Input (VB-Audio Virtual C' == p.get_device_info_by_index(u)['name']:
         INDEX = u
+    else: INDEX = 0
 
 def read(file): # читает из json
     with open(file, 'r', encoding='utf-8') as f:
@@ -101,7 +103,7 @@ class GoogleSheet:
 class no_reg(customtkinter.CTk):
     key = read('conf.json')['conf'][0]['key']
     ptt = read('conf.json')['conf'][0]['ptt']
-    index = read('conf.json')['conf'][0]['INDEX']
+    index = INDEX
     path = read('conf.json')['conf'][0]['path']
     user = read('conf.json')['conf'][0]['user']
     tn = read('conf.json')['conf'][0]['tab_num']
@@ -110,6 +112,8 @@ class no_reg(customtkinter.CTk):
     g_number = read('conf.json')['conf'][0]['gov_num']
     tns = GoogleSheet().check_sheet(range=RANGE_WL)
     
+    save_key(key, ptt, INDEX, path, user, tn,model, b_number, g_number)
+
     def __init__(self):
         super().__init__()
         self.geometry("400x350")
@@ -329,6 +333,8 @@ class already_reg(customtkinter.CTk):
     model = read('conf.json')['conf'][0]['bus_model']
     g_number = read('conf.json')['conf'][0]['gov_num']
     tns = GoogleSheet().check_sheet(range=RANGE_WL)
+
+    save_key(key, ptt, INDEX, path, user, tn,model, b_number, g_number)
     
     def __init__(self):
         super().__init__()
@@ -368,6 +374,9 @@ class already_reg(customtkinter.CTk):
         self.button_3 = customtkinter.CTkButton(master=self.sidebar_frame, text="Настройки", fg_color=INT_COLOR, hover_color=INT_COLOR_HOVER, command=self.settings)
         self.settings_win = None
         self.button_3.grid(row=3, column=0, pady=10, padx=20, sticky="n")
+
+        self.music = customtkinter.CTkButton(master=self.sidebar_frame, text="Включить музыку", fg_color=INT_COLOR, hover_color=INT_COLOR_HOVER, command=self.music)
+        self.music.grid(row=4, column=0, pady=10, padx=20, sticky="n")
 
         self.appearance_mode_label = customtkinter.CTkLabel(self.sidebar_frame, text="Тема оформления:", anchor="w")
         self.appearance_mode_label.grid(row=5, column=0, padx=20, pady=(10, 0))
@@ -474,6 +483,9 @@ class already_reg(customtkinter.CTk):
               # create window if its None or destroyed
         else:
             self.settings_win.focus()  # if window exists focus it
+    
+    def music(self):
+        webbrowser.open('https://volnorez.com/molot')
 
 class App(customtkinter.CTk):
     def __init__(self):
