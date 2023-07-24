@@ -512,7 +512,7 @@ def download_upd():
 def main():
     try:
         response = requests.get(url='https://raw.githubusercontent.com/TheStepashich/pivo/main/ver.txt')
-        if response.text.removesuffix('\n') == 'v1.1.2':
+        if response.text.removesuffix('\n') == 'v1.1.3':
             print(response.text)
         else:
             print('Программа устарела', response.text)
