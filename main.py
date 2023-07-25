@@ -31,9 +31,10 @@ DARK_IMAGE = 'dark_radar.jpg'
 
 p = pyaudio.PyAudio()
 for u in range(p.get_device_count()):
-    # print(u, p.get_device_info_by_index(u))
+    # print(u, p.get_device_info_by_index(u)['name'])
     if 'CABLE Input (VB-Audio Virtual C' == p.get_device_info_by_index(u)['name']:
         INDEX = u
+        break
     else: INDEX = 0
 
 def read(file): # читает из json
