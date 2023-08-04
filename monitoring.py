@@ -71,22 +71,15 @@ def main():
     model = read('conf.json')['conf'][0]['bus_model']
     g_number = read('conf.json')['conf'][0]['gov_num']
     with open('tmp.txt', 'r') as tmp:
-        date = tmp.readline()
-        m_number = tmp.readline()
-        locaton = tmp.readline().removesuffix('\n')
-
+        chatp = tmp.readline()
+        m = tmp.readline()
+        x = tmp.readline()
+        y = tmp.readline()
     gs = GoogleSheet()
     
-    if locaton == 'Конечная.':
-        null_range = f'DataBase_auto!K2:P{tn}'
-        gs.deleteRangeValues(null_range)
-    else:
-        test_values = [
-            [bn, model, g_number, date, m_number, locaton]
-        ]
-        test_range = f'DataBase_auto!K{tn}:P{tn}'
-        gs.updateRangeValues(test_range, test_values)
+    test_values = [
+        [user, bn, chatp, m, x, y]
+    ]
+    test_range = f'DataBase_auto!K{3}:P{3}'
+    gs.updateRangeValues(test_range, test_values)
     # print(INDEX, MAX_STR+1)
-
-if __name__ == '__main__':
-    main()

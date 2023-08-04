@@ -6,10 +6,12 @@
             "INDEX": 0,
             "path": "",
             "user": "",
-            "tab_num": "",
+            "password": "",
+            "tab_num": 0,
             "bus_model": "",
             "bus_num": "",
-            "gov_num": ""
+            "gov_num": "",
+            "chatp": ""
         }
     ]
 }
